@@ -2,18 +2,17 @@
 using namespace std;
 
 int main() {
-    int n = 10;  // Number of processes
-    int bt[] = {9, 8, 7, 8, 7, 8, 2, 1, 2, 5};  // Burst times for each process
-    int at[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};  // Arrival times for each process
-    int wt[10], tat[10], ct[10];  // Arrays for waiting time, turnaround time, and completion time
-    float avg_wt = 0, avg_tat = 0;  // Variables to accumulate averages
+    int n = 10; 
+    int bt[] = {9, 8, 7, 8, 7, 8, 2, 1, 2, 5}; 
+    int at[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int wt[10], tat[10], ct[10];
+    float avg_wt = 0, avg_tat = 0; 
     
     cout << "FCFS (First Come First Serve) Scheduling\n";
     cout << "=========================================\n\n";
     
-    // Calculate completion time and waiting time for each process
-    ct[0] = at[0] + bt[0];  // CT = Arrival Time + Burst Time (first process)
-    wt[0] = 0;  // First process waits 0 time (starts when it arrives)
+    ct[0] = at[0] + bt[0];
+    wt[0] = 0;
     
     for (int i = 1; i < n; i++) {
         ct[i] = ct[i-1] + bt[i];  // CT = previous CT + current BT
@@ -25,7 +24,7 @@ int main() {
         tat[i] = ct[i] - at[i];  // TAT = Completion Time - Arrival Time
     }
     
-    // Display process details
+    // Display process table
     cout << "Process\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time\n";
     cout << "-------\t------------\t----------\t------------\t---------------\n";
     
