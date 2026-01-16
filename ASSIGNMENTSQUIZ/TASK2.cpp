@@ -1,6 +1,6 @@
 /* 2. create first come first serve scheduling
 there will be 10 processes
-Arrival time depends on yourself
+The arrival time is random for each processes
 Process burst:
 9
 8
