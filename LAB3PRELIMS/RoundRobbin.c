@@ -41,7 +41,7 @@ int main() {
         tatavg += tat[i];
     }
     
-    printf("\n\tPROCESS\tBURST TIME\tWAITING TIME\tTURNAROUND TIME\n");
+    printf("\n\tPROCESS\t\tBURST TIME\tWAITING TIME\tTURNAROUND TIME\n");
     for(i = 0; i < n; i++) {
         printf("\tP%d\t\t%d\t\t%d\t\t%d\n", i, bt[i], wt[i], tat[i]);
     }
