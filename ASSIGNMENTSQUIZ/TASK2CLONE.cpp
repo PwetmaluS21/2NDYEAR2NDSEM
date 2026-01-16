@@ -2,58 +2,58 @@
 using namespace std;
 
 int main() {
-    int n = 10;
-    int bt[] = {9, 8, 7, 8, 7, 8, 2, 1, 2, 5}; // Burst times
-    int wt[10], tat[10];
-    float avg_wt = 0, avg_tat = 0;
+    int n = 10;  // Number of processes
+    int bt[] = {9, 8, 7, 8, 7, 8, 2, 1, 2, 5};  // Burst times for each process
+    int at[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};  // Arrival times for each process
+    int wt[10], tat[10], ct[10];  // Arrays for waiting time, turnaround time, and completion time
+    float avg_wt = 0, avg_tat = 0;  // Variables to accumulate averages
     
     cout << "FCFS (First Come First Serve) Scheduling\n";
     cout << "=========================================\n\n";
     
-    // Calculate waiting time for each process
-    wt[0] = 0; // First process has 0 waiting time
+    // Calculate completion time and waiting time for each process
+    ct[0] = at[0] + bt[0];  // CT = Arrival Time + Burst Time (first process)
+    wt[0] = 0;  // First process waits 0 time (starts when it arrives)
     
     for (int i = 1; i < n; i++) {
-        wt[i] = wt[i-1] + bt[i-1];
+        ct[i] = ct[i-1] + bt[i];  // CT = previous CT + current BT
+        wt[i] = ct[i-1] - at[i];  // WT = previous CT - current AT
+        if (wt[i] < 0) wt[i] = 0;  // If process arrives after previous finishes, no wait
     }
     
-    // Calculate turnaround time for each process
     for (int i = 0; i < n; i++) {
-        tat[i] = wt[i] + bt[i];
+        tat[i] = ct[i] - at[i];  // TAT = Completion Time - Arrival Time
     }
     
     // Display process details
-    cout << "Process\tBurst Time\tWaiting Time\tTurnaround Time\n";
-    cout << "-------\t----------\t------------\t---------------\n";
+    cout << "Process\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time\n";
+    cout << "-------\t------------\t----------\t------------\t---------------\n";
     
     for (int i = 0; i < n; i++) {
-        cout << "P" << i+1 << "\t" << bt[i] << "\t\t" << wt[i] << "\t\t" << tat[i] << "\n";
-        avg_wt += wt[i];
-        avg_tat += tat[i];
+        cout << "P" << i+1 << "\t" << at[i] << "\t\t" << bt[i] << "\t\t" << wt[i] << "\t\t" << tat[i] << "\n";  // Display all metrics for each process
+        avg_wt += wt[i];  // Accumulate waiting times
+        avg_tat += tat[i];  // Accumulate turnaround times
     }
     
-    avg_wt /= n;
-    avg_tat /= n;
+    avg_wt /= n;  // Calculate average waiting time
+    avg_tat /= n;  // Calculate average turnaround time
     
     cout << "\n=========================================\n";
     cout << "Average Waiting Time (AVEWT): " << fixed;
-    cout.precision(2);
+    cout.precision(2);  // Set precision to 2 decimal places
     cout << avg_wt << "\n";
     cout << "Average Turnaround Time (AVETT): " << avg_tat << "\n";
     
-    // Gantt Chart
     cout << "\nGantt Chart:\n";
     cout << "|";
     for (int i = 0; i < n; i++) {
-        cout << " P" << i+1 << " |";
+        cout << " P" << i+1 << " |";  // Print process boxes in FCFS order
     }
     cout << "\n";
     
-    cout << "0";
-    int time = 0;
+    cout << at[0];  // Print start time (arrival of first process)
     for (int i = 0; i < n; i++) {
-        time += bt[i];
-        cout << "    " << time;
+        cout << "    " << ct[i];  // Print completion time for each process
     }
     cout << "\n";
     
