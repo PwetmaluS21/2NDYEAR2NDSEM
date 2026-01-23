@@ -1,4 +1,4 @@
-# 2NDYEAR2NDSEM
+# 2NDYEAR2NDSEM QUIZ
 
 1. system call
 use system calls like fork (), getpid(), wait()
